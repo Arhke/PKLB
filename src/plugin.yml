@@ -1,0 +1,7 @@
+name: PKLB
+main: net.waterraid.PKLB.Main
+version: 1.0
+commands:
+  lb:
+      description: Sends a player has left message.
+      usage: /<command>
