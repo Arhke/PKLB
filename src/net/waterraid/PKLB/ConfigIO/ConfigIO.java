@@ -7,15 +7,22 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 public class ConfigIO {
-    public static File CONFIGFILE = new File(Main.getFolder() + File.separator + "config.yml");
+    public static File CONFIGFILE;
+    public static File DATAFILE;
 
     public static void load() {
-        if (!ConfigIO.CONFIGFILE.exists()){
+        if (!CONFIGFILE.exists()) {
             Main.getInstance().saveResource("config.yml", false);
+        }
+        if (!DATAFILE.exists()) {
+            Main.getInstance().saveResource("data.yml", false);
         }
         YamlConfiguration config = new YamlConfiguration();
         try {
@@ -27,30 +34,35 @@ public class ConfigIO {
             e.printStackTrace();
             Main.fatalDisable("Error Loading Configuration File for PKLB");
         }
-        StatManager.activetime = ((long)config.getInt("activetime"))*24L*60L*60L*1000L;
         StatManager.refreshtime = config.getLong("refreshtime");
-        if (StatManager.activetime <= 0){
-            StatManager.activetime = 30L*24L*60L*60L*1000L;
-        }
         if (StatManager.refreshtime < 20) {
             StatManager.refreshtime = 20;
         }
-        config.getKeys(false).forEach((s)->{
-            StatManager.activeplayers.put(UUID.fromString(s), config.getLong(s+".time"));
-        });
+        StatManager.activetime = config.getLong("activetime");
+        YamlConfiguration datum = new YamlConfiguration();
+        try {
+            datum.load(DATAFILE);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InvalidConfigurationException e) {
+            e.printStackTrace();
+        }
+        datum.getKeys(false).forEach(
+                (entry)->StatManager.activeplayers.put(UUID.fromString(entry), datum.getLong(entry))
+        );
 
 
     }
+
     public static void save() {
-        if (!ConfigIO.CONFIGFILE.exists()){
-            Main.getInstance().saveResource("config.yml", false);
+        if (!ConfigIO.DATAFILE.exists()) {
+            Main.getInstance().saveResource("data.yml", false);
         }
-        YamlConfiguration config = new YamlConfiguration();
-        for(Map.Entry<UUID, Long> s:StatManager.activeplayers.entrySet()) {
-            config.set(s.getKey().toString()+".time", s.getValue());
-        }
+        YamlConfiguration datum = new YamlConfiguration();
+        StatManager.activeplayers.entrySet().forEach((entry)->datum.set(entry.getKey().toString(), entry.getValue()));
+
         try {
-            config.save(ConfigIO.CONFIGFILE);
+            datum.save(ConfigIO.DATAFILE);
         } catch (IOException e) {
             Main.fatalDisable("Error Loading Config File for PKLB");
             e.printStackTrace();

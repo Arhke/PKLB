@@ -29,9 +29,10 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../PlaceholderAPI-2.10.5.jar!/" />
-    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15332031" />
     <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -46,22 +47,26 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="765" y="229" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1586677680256" />
-    <state x="666" y="261" key="FileChooserDialogImpl" timestamp="1587433014523">
+    <state x="756" y="405" width="408" height="237" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes" timestamp="1589844170725">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="666" y="261" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1587433014523" />
-    <state x="646" y="219" width="669" height="602" key="NewModule_or_Project.wizard" timestamp="1587150786006">
+    <state x="756" y="405" width="408" height="237" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes/0.0.1920.1040@0.0.1920.1040" timestamp="1589844170725" />
+    <state x="666" y="261" key="FileChooserDialogImpl" timestamp="1589788023224">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="646" y="219" width="669" height="602" key="NewModule_or_Project.wizard/0.0.1920.1040@0.0.1920.1040" timestamp="1587150786006" />
-    <state x="440" y="94" key="SettingsEditor" timestamp="1587433016504">
+    <state x="666" y="261" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1589788023224" />
+    <state x="646" y="219" width="669" height="602" key="NewModule_or_Project.wizard" timestamp="1589788029874">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="440" y="94" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1587433016504" />
-    <state x="656" y="252" width="698" height="536" key="find.popup" timestamp="1587001811846">
+    <state x="646" y="219" width="669" height="602" key="NewModule_or_Project.wizard/0.0.1920.1040@0.0.1920.1040" timestamp="1589788029874" />
+    <state x="440" y="94" key="SettingsEditor" timestamp="1589681277997">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="656" y="252" width="698" height="536" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1587001811846" />
+    <state x="440" y="94" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1589681277997" />
+    <state x="656" y="252" width="698" height="536" key="find.popup" timestamp="1589760629989">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="656" y="252" width="698" height="536" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1589760629989" />
     <state x="604" y="140" key="new project wizard" timestamp="1587059784443">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

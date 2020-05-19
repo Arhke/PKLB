@@ -3,6 +3,7 @@ package net.waterraid.PKLB;
 import com.projectkorra.projectkorra.util.Statistic;
 import com.projectkorra.projectkorra.util.StatisticsMethods;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -76,6 +77,8 @@ public class PlaceHolderHook extends PlaceholderExpansion{
         }
         if (identifier.equalsIgnoreCase("TOTALLEVEL")) {
             return "" + StatisticsMethods.getStatisticTotal(player.getUniqueId(), Statistic.ABILITY_LEVEL);
+        }else if (identifier.equalsIgnoreCase("LEVELLEADERBOARD")) {
+            return ChatColor.GOLD + "===========<"+ChatColor.AQUA+"Total Level LeaderBoard" + ChatColor.GOLD+">===========\n" +Commands.TotalLevel;
         }
         return null;
     }

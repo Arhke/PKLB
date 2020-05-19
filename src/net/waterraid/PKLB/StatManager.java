@@ -12,13 +12,13 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class StatManager implements Runnable, Listener {
     public static Map<UUID, Long> activeplayers = new HashMap<>();
     public static Map<String, Integer> idconvert;
-    public static long activetime=30*24*60*60;
     public static long refreshtime = 50;
-
+    public static long activetime = 604800000L;
     @Override
     public void run() {
         calculate();
@@ -30,15 +30,20 @@ public class StatManager implements Runnable, Listener {
     }
 
     public void calculate() {
-        Map<Integer, String> map = Manager.getManager(StatisticsManager.class).getKeysById();
-        int max = max(map.keySet())+1;
+        if (activetime > 0){
+            Map<UUID, Long> result = activeplayers.entrySet()
+                    .stream().filter(entries -> entries.getValue()+activetime >= System.currentTimeMillis())
+                    .collect(Collectors.toMap(map -> map.getKey(), map -> map.getValue()));
+            activeplayers = result;
+        }
+        Map<Integer, String> keysById = Manager.getManager(StatisticsManager.class).getKeysById();
+        int max = Collections.max(keysById.keySet())+1;
         List<List<StatSet>> statmap = new ArrayList<>();
         List<StatSet> levelmap = new ArrayList<>();
         for (int i = 0; i < max; i++) {
             statmap.add(new ArrayList<>());
         }
-        activeplayers.entrySet().forEach((entry) -> {
-            UUID id = entry.getKey();
+        activeplayers.keySet().forEach((id) -> {
             Manager.getManager(StatisticsManager.class).getStatisticsMap(id).entrySet().forEach((Map.Entry<Integer, Long> a) -> {
                 statmap.get(a.getKey()).add(new StatSet(id, a.getValue()));
             });
@@ -47,7 +52,7 @@ public class StatManager implements Runnable, Listener {
         for (int k = 0; k < statmap.size(); k++) {
             List<StatSet> statSets = statmap.get(k);
             String ret = "";
-            for (int i = 1; i <= 10 && statSets.size() != 0; i++) {
+            for (int i = 1; i <= 10 && statSets.size() > 0; i++) {
                 int maxIndex = 0;
                 for (int index = 0; index < statSets.size(); index++) {
                     if (statSets.get(index).getStat() > statSets.get(maxIndex).getStat()) {
@@ -56,39 +61,23 @@ public class StatManager implements Runnable, Listener {
 
                 }
                 StatSet ss = statSets.remove(maxIndex);
-                if (ret.length() == 0) {
-                    ret = "" + ChatColor.GOLD + i + ": " + Bukkit.getOfflinePlayer(ss.getID()).getName() + " " + ss.getStat();
-                } else {
-                    ret = ret + "\n" + ChatColor.GOLD + i + ": " + Bukkit.getOfflinePlayer(ss.getID()).getName() + " " + ss.getStat();
-                }
+                ret += ""+ChatColor.GOLD + i + ": " + Bukkit.getOfflinePlayer(ss.getID()).getName() + " " + ss.getStat()+"\n";
             }
-            Commands.LEADERBOARD.put(k,ret);
+            Commands.LEADERBOARD.put(k,ret.length()== 0 ? ret:ret.substring(0,ret.length()-1));
         }
         String ret = "";
-        for (int i = 1; i <= 10 && levelmap.size() != 0; i++) {
+        for (int i = 1; i <= 10 && levelmap.size() > 0; i++) {
             int maxIndex = 0;
             for (int index = 0; index < levelmap.size(); index++) {
                 if (levelmap.get(index).getStat() > levelmap.get(maxIndex).getStat()) {
                     maxIndex = index;
                 }
-
             }
             StatSet ss = levelmap.remove(maxIndex);
-            if (ret.length() == 0) {
-                ret = "" + ChatColor.GOLD + i + ": " + Bukkit.getOfflinePlayer(ss.getID()).getName() + " " + ss.getStat();
-            } else {
-                ret = ret + "\n" + ChatColor.GOLD + i + ": " + Bukkit.getOfflinePlayer(ss.getID()).getName() + " " + ss.getStat();
-            }
+            ret += ""+ChatColor.GOLD + i + ": " + Bukkit.getOfflinePlayer(ss.getID()).getName() + " " + ss.getStat()+"\n";
         }
-        Commands.TotalLevel = ret;
+        Commands.TotalLevel = ret.length()== 0 ? ret:ret.substring(0,ret.length()-1);
     }
 
-    public int max(Collection<Integer> list) {
-        int ret = 0;
-        for (int i : list) {
-            ret = Math.max(ret, i);
-        }
-        return ret;
-    }
 
 }
